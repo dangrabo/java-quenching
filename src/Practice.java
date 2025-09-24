@@ -229,6 +229,19 @@ public class Practice {
      * @return the count of vertices with outdegree 0
      */
     public static int sinkCount(Vertex<Integer> start) {
-        return 0;
+        if (start == null) return 0;
+        Set<Vertex<Integer>> visited = new HashSet<>();
+        sinkCount(start, visited);
+        int count = 0;
+        for (Vertex<Integer> current : visited) {
+            if (current.neighbors.size() == 0 || current.neighbors == null) count++;
+        }
+        return count;
+    }
+
+    public static void sinkCount(Vertex<Integer> current, Set<Vertex<Integer>> visited) {
+        if (current == null || visited.contains(current)) return;
+        visited.add(current);
+        for (Vertex<Integer> neighbor : current.neighbors) sinkCount(neighbor, visited);
     }
 }
