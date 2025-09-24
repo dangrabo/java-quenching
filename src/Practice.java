@@ -1,5 +1,4 @@
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Practice {
     /**
@@ -11,7 +10,12 @@ public class Practice {
      * @return the sum of the odd numbers in the array
      */
     public static int oddSum(int[] nums) {
-        return 0;
+        int sum = 0;
+        if (nums == null) return 0;
+        for (int num : nums) {
+            if (num % 2 != 0) sum += num;
+        }
+        return sum;
     }
 
     /**
@@ -26,7 +30,15 @@ public class Practice {
      * @throws NullPointerException if words is null
      */
     public static String shortestWord(Set<String> words) {
-        return null;
+        String shortestWord = "";
+        for (String word : words) {
+            if (shortestWord.length() == 0) shortestWord = word;
+            if (word.length() < shortestWord.length()) shortestWord = word;
+            if (word.length() == shortestWord.length()) {
+                if (word.compareTo(shortestWord) < 0) shortestWord = word;
+            }
+        }
+        return shortestWord;
     }
 
     /**
@@ -39,7 +51,11 @@ public class Practice {
      * @throws NullPointerException if ages is null
      */
     public static Set<String> adults(Map<String, Integer> ages) {
-        return null;
+        Set<String> results = new HashSet<String>();
+        for (String name : ages.keySet()){
+            if (ages.get(name) >= 18) results.add(name);
+        }
+        return results;
     }
 
     /**
@@ -50,7 +66,14 @@ public class Practice {
      * @throws IllegalArgumentException if head is null
      */
     public static int biggestNumber(ListNode<Integer> head) {
-        return 0;
+        if (head == null) throw new IllegalArgumentException();
+        int biggestNumber = head.data;
+        ListNode<Integer> current = head;
+        while (current != null) {
+            if (current.data > biggestNumber) biggestNumber = current.data;
+            current = current.next;
+        }
+        return biggestNumber;
     }
 
     /**
@@ -67,7 +90,19 @@ public class Practice {
      * @return a frequency map of values in the list
      */
     public static <T> Map<T, Integer> frequencies(ListNode<T> head) {
-        return null;
+        Map<T, Integer> results = new HashMap<>();
+        if (head == null) return results;
+        ListNode<T> current = head;
+        while (current != null) {
+            if (results.containsKey(current.data)) {
+                results.put(current.data, results.get(current.data) + 1);
+            } else {
+                results.put(current.data, 1);
+            }
+            current = current.next;
+        }
+        
+        return results;
     }
 
 
@@ -80,7 +115,8 @@ public class Practice {
      * @return the number of levels in the tree
      */
     public static int levelCount(BinaryTreeNode<?> root) {
-        return 0;
+        if (root == null) return 0;
+        return 1 + Math.max(levelCount(root.left), levelCount(root.right));
     }
 
 
@@ -108,7 +144,26 @@ public class Practice {
      * @return the sum of the nodes at the given level
      */
     public static int sumAtLevel(BinaryTreeNode<Integer> root, int level) {
-        return 0;
+        if (root == null || level == 0) return 0;
+        int levelTrack = level;
+        Queue<BinaryTreeNode<Integer>> q = new LinkedList<>();
+        q.add(root);
+        while (levelTrack > 1) {
+            int i = q.size();
+            while (i > 0) {
+                System.out.println("i" + i);
+                BinaryTreeNode<Integer> current = q.poll();
+                if (current.right != null) q.add(current.right);
+                if (current.left != null) q.add(current.left);
+                i--;
+            }
+            levelTrack--;
+            System.out.println("new lt " + levelTrack);
+        }
+        int sum = 0;
+        for (BinaryTreeNode<Integer> current : q) sum += current.data;
+        System.out.println(sum);
+        return sum;
     }
 
 
