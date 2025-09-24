@@ -178,7 +178,22 @@ public class Practice {
      * @return true if the sums are equal, false otherwise
      */
     public static boolean sumMatch(BinaryTreeNode<Integer> root, ListNode<Integer> head) {
-        return false;
+        return sumMatchTreeHelper(root) == sumMatchListHelper(head);
+    }
+
+    public static int sumMatchTreeHelper(BinaryTreeNode<Integer> root) {
+        if (root == null) return 0;
+        return root.data + sumMatchTreeHelper(root.left) + sumMatchTreeHelper(root.right);
+    }
+
+    public static int sumMatchListHelper(ListNode<Integer> head) {
+        if (head == null) return 0;
+        int sum = 0;
+        while (head != null) {
+            sum += head.data;
+            head = head.next;
+        }
+        return sum;
     }
 
     /**
