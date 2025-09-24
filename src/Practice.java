@@ -206,7 +206,18 @@ public class Practice {
      * @return the sum of all the vertices
      */
     public static int graphSum(Vertex<Integer> start) {
-        return 0;
+        if (start == null) return 0;
+        Set<Vertex<Integer>> visited = new HashSet<>();
+        graphSum(start, visited);
+        int sum = 0;
+        for (Vertex<Integer> current : visited) sum += current.data;
+        return sum;
+    }
+
+    public static void graphSum(Vertex<Integer> current, Set<Vertex<Integer>> visited) {
+        if (current == null || visited.contains(current)) return;
+        visited.add(current);
+        for (Vertex<Integer> neighbor : current.neighbors) graphSum(neighbor, visited);
     }
 
     /**
